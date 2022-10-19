@@ -1,12 +1,29 @@
-const express = require('express');
-
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import { registerPerson, login, getFiles, updateFile, removefile, addfile } from './repository.js';
+import * as dotenv from 'dotenv';
+dotenv.config()
 
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(express.json());
 
 
-app.get("/check", (req, res) => {
-    res.json({'message': 'Sakhshi'});
-})
+
+app.post("/signup", registerPerson);
+
+app.post("/login", login);
+
+app.post("/files", addfile);
+
+
+app.put("/files/:id", updateFile);
+
+app.delete("/files/:id", removefile);
+
+app.get("/files", getFiles);
 
 
 app.listen(8000, () => {
